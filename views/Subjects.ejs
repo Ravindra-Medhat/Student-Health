@@ -168,7 +168,7 @@
 <% Subjects.forEach(function (subject) { %>
     <li>
         <%= subject.SubjectName %>
-        <form action="/Subject/deleteSubject/<%= subject._id %>" method="post" class="delete-form">
+        <form action="/Subjects/deleteSubject/<%= subject._id %>" method="post" class="delete-form">
             <button type="submit" id="deleteButton">
                 <i class="fas fa-trash-alt"></i> <!-- Make sure the class is correct -->
             </button>

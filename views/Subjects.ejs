@@ -153,35 +153,22 @@
 
 <body>
     
-    <h1>All Indicators</h1>
-    <a href="/Company/companyList" class="back-button">Back</a>
+    <h1>All Subject</h1>
+    <a href="/Company/marksList" class="back-button">Back</a>
     <!-- Form to add a new indicator -->
-    <form action="/indicator/addIndicator" method="post" id="addIndicatorForm">
-        <label for="area">Area:</label>
-        <input type="text" name="area" id="area" required>
+    <form action="/Subjects" method="post" id="addIndicatorForm">
+        
+        <label for="area">Subject:</label>
+        <input type="text" name="SubjectName" id="Subject" required>
 
-        <label for="performanceIndicator">Performance Indicator:</label>
-        <input type="text" name="performanceIndicator" required>
-
-        <!-- Add more fields as needed -->
-
-        <button type="submit">Add Indicator</button>
+        <button type="submit">Add Subject</button>
     </form>
 
     <!-- Display existing indicators sorted by area -->
-<% indicators.forEach(function (indicator) { %>
-    <% if (indicator.area !== currentArea) { %>
-        <!-- Start new area card -->
-        
-        <% currentArea = indicator.area; %>
-    
-        <div class="area-card" onclick="fillArea('<%= indicator.area %>')">
-            <h2 style="color: #d9534f; text-align: center;"><%= indicator.area %></h2>
-            <ul>
-    <% } %>
+<% Subjects.forEach(function (subject) { %>
     <li>
-        <%= indicator.performanceIndicator %>
-        <form action="/indicator/deleteIndicator/<%= indicator._id %>" method="post" class="delete-form">
+        <%= subject.SubjectName %>
+        <form action="/Subject/deleteIndicator/<%= subject._id %>" method="post" class="delete-form">
             <button type="submit" id="deleteButton">
                 <i class="fas fa-trash-alt"></i> <!-- Make sure the class is correct -->
             </button>

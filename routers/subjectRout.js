@@ -1,15 +1,15 @@
 const express = require('express')
 const app = express();
 
-const Indicator = require('../models/subject');
+const Subject = require('../models/subject');
 
-app.get('/indicators', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
         // Fetch all indicators from the database
-        const indicators = await Indicator.find().sort({area : 1});
+        const Subjects = await Subject.find().sort({area : 1});
 
         // Render the Indicators page with the retrieved data
-        res.render('Indicators', { indicators });
+        res.render('Subjects', { Subjects });
     } catch (error) {
         console.error('Error fetching indicators:', error);
         res.status(500).send('Internal Server Error');
@@ -17,25 +17,23 @@ app.get('/indicators', async (req, res) => {
 });
 
 // Handle form submission for adding a new indicator
-app.post('/addIndicator', async (req, res) => {
+app.post('/', async (req, res) => {
     try {
         // Extract data from the form
-        const { area, performanceIndicator } = req.body;
+        const { SubjectName } = req.body;
 
         // Create a new indicator instance
-        const newIndicator = new Indicator({
-            area,
-            performanceIndicator,
-            // ... add other fields here
+        const newSubject = new Subject({
+            SubjectName 
         });
 
         // Save the new indicator to the database
-        await newIndicator.save();
+        await newSubject.save();
 
         // Redirect back to the Indicators page after adding
-        res.redirect('/indicator/indicators');
+        res.redirect('/Subjects');
     } catch (error) {
-        console.error('Error adding indicator:', error);
+        console.error('Error adding Subjects:', error);
         res.status(500).send('Internal Server Error');
     }
 });
@@ -47,10 +45,10 @@ app.post('/deleteIndicator/:id', async (req, res) => {
         const indicatorId = req.params.id;
 
         // Find and delete the indicator by ID
-        const deletedIndicator = await Indicator.findByIdAndDelete(indicatorId);
+        const deletedIndicator = await Subject.findByIdAndDelete(indicatorId);
 
         if (!deletedIndicator) {
-            return res.status(404).send('Indicator not found');
+            return res.status(404).send('Subject not found');
         }
 
         res.redirect('/indicator/indicators');

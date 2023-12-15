@@ -67,36 +67,27 @@
 </head>
 
 <body>
-    <h1>Performance Ratings</h1>
-    <form action="./submit-ratings" method="POST">
+    <h1>Performance</h1>
+    <form action="./submit-marks" method="POST">
+        <% let i=0; %>
 
-        <!-- <div>
-            <h2> <label for="company-name">Company Name:</label></h2>
-            <input type="text" name="companyName" id="company-name" required>
-        </div> -->
-        <% let currentArea='' ; %>
-            <% for (let i=0; i < indicators.length; i++) { %>
-                <% if (indicators[i].area !==currentArea) { %>
-                    <% currentArea=indicators[i].area; %>
-                        <h2>
-                            <%= currentArea %>
-                        </h2>
-                        <% } %>
-                            <div>
-                                <h3>
-                                    <%= indicators[i]["performanceIndicator"] %>
-                                </h3>
-                                <label for="<%= 'rating-' + i %>">Rate (0-10): </label>
-                                <select name="<%= 'rating-' + i %>" id="<%= 'rating-' + i %>" required>
-                                    <% for (let j=0; j <=10; j++) { %>
-                                        <option value="<%= j %>">
-                                            <%= j %>
-                                        </option>
-                                        <% } %>
-                                </select>
-                            </div>
+            <% Subjects.forEach( (Subject) => { %>
+                <div>
+                    <h3>
+                        <%= Subject.SubjectName %>
+                    </h3>
+                    <label for="<%= 'mark-' + i %>">Rate (0-10): </label>
+                    <select name="<%= 'mark-' + i %>" id="<%= 'mark-' + i %>" required>
+                        <% for (let j=0; j <=10; j++) { %>
+                            <option value="<%= j %>">
+                                <%= j %>
+                            </option>
                             <% } %>
-                                <button type="submit">Submit Ratings</button>
+                    </select>
+                </div>
+
+            <% i++; }) %>
+                <button type="submit">Submit Marks</button>
     </form>
 </body>
 

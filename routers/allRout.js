@@ -1,9 +1,9 @@
 const express = require('express');
 const userRout = require('./userRout');
 const detailsRout = require('./detailsRout');
-const companyRout = require('./companyRout');
+const marksRout = require('./marksRout');
 const profileRout = require('./profileRout');
-const indicatorRout = require('./indicatorRout');
+const indicatorRout = require('./subjectRout');
 const jwt = require("jsonwebtoken");
 const app = express();
 
@@ -29,7 +29,7 @@ const verifyAdmin = (req,res,next)=>{
     if(t){
         jwt.verify(t,"RKM",(err,decode)=>{
             if(err || decode.data.Roal != "Admin"){
-                res.redirect("/Company/companyList");
+                res.redirect("/Company/marksList");
             }
             req.data = decode;
             next();
@@ -42,11 +42,11 @@ const verifyAdmin = (req,res,next)=>{
 app.use("/user",userRout);
 app.use("/detail",detailsRout);
 app.use("/profile",verifyUser,profileRout);
-app.use("/Company",verifyUser,companyRout);
-app.use("/indicator",verifyAdmin,indicatorRout);
+app.use("/marks",verifyUser,marksRout);
+app.use("/Subjects",verifyAdmin,indicatorRout);
 
 app.use((req,res)=>{
     console.log(req.url);
-    res.redirect("/Company/companyList");
+    res.redirect("/marks/marksList");
 })
 module.exports=app;

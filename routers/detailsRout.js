@@ -14,46 +14,15 @@ app.get('/:id', (req, res) => {
 });
 
 app.get('/data/:id', (req, res) => {
-    
     var id = req.params.id;
 
-    Rating.findById(id).then((data) => {
-
-        
-
-        // Initialize an empty object to store the total rating and count for each area
-        const areaStats = {};
-
-        // Loop through the data to calculate the total rating and count for each area
-        data.Data.forEach((area) => {
-            const areaName = area.Area;
-            const performanceIndicators = area.PerformanceIndicators;
-
-            // Calculate the total rating for the area
-            const totalRating = performanceIndicators.reduce((sum, indicator) => {
-                return sum + indicator.rating;
-            }, 0);
-
-            // Calculate the count of performance indicators in the area
-            const indicatorCount = performanceIndicators.length;
-
-            // Calculate the average rating for the area
-            const averageRating = indicatorCount > 0 ? totalRating / indicatorCount : 0;
-
-            // Store the result in the areaStats object
-            areaStats[areaName] = averageRating;
-        });
-
-        // Initialize an array to store the final result in the desired format
-        const result = Object.keys(areaStats).map((areaName) => {
-            return { department: areaName, count: areaStats[areaName].toFixed(2) };
-        });
-
-        res.send(result);
+    Marks.findById(id).then((data) => {
+        // console.log(data.Data);
+        res.send(data.Data);
 
     }).catch((error) => {
         console.log(error);
-        res.send(data_for_graph);
+        res.status(500).send({ error: 'Internal Server Error' });
     });
 });
 

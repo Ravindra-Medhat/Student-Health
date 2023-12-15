@@ -18,11 +18,9 @@ app.post('/register', async (req, res) => {
             const newUser = new user({
                 Email: req.body.email,
                 Password: req.body.password,
-                CompanyName: req.body.companyName,
-                ContactPerson: req.body.contactPerson,
+                Name: req.body.Name,
                 MobileNumber: req.body.mobileNumber,
-                Roal : "Customer",
-                isVerify : false, 
+                Roal : "Student",
             });
             
             // Save the user to the database
@@ -38,7 +36,7 @@ app.post('/register', async (req, res) => {
                 
                 }else{
 
-                    verifyOtp.findOne({Email : req.body.email,otp : req.body.req.body.otp})
+                    verifyOtp.findOne({Email : req.body.email,otp : req.body.otp})
                     .then((data)=>{
 
                         if(data){
@@ -93,11 +91,11 @@ app.post("/login", (req, res) => {
                 return res.render("login", { errorMessage: "Invalid email or password" });
             } else {
                 req.data = data;
-                // res.redirect("/Company/companyList");
+                // res.redirect("/Company/marksList");
                 
                 const t =  jwt.sign({data : data },"RKM",{expiresIn : "1h"});
                 res.cookie("BHC",t);
-                res.redirect("/Company/companyList");
+                res.redirect("/marks/marksList");
 
             }
 

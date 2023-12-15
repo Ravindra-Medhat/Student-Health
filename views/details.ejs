@@ -42,7 +42,7 @@
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        justify-content: center;            
+        justify-content: center;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         margin-top: 130px;
         /* Center the content horizontally */
@@ -101,25 +101,28 @@
     }
 
     .back-button {
-            float: left;
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #d9534f; /* Red color */
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            width: 120px; /* Adjust width as needed */
-            margin: 20px auto;
-            margin-bottom: 50px;
-            margin-left: 10px;
-        }
+        float: left;
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #d9534f;
+        /* Red color */
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        width: 120px;
+        /* Adjust width as needed */
+        margin: 20px auto;
+        margin-bottom: 50px;
+        margin-left: 10px;
+    }
 
-        .back-button:hover {
-            background-color: #ac2925; /* Darker red on hover */
-        }
+    .back-button:hover {
+        background-color: #ac2925;
+        /* Darker red on hover */
+    }
 </style>
 
 <body>
@@ -127,12 +130,12 @@
         <%= Company %>
     </h1>
     <h2>Business Health</h2>
-  
-    <a href="/Company/companyList" class="back-button">Back</a>
+
+    <a href="/Company/marksList" class="back-button">Back</a>
 
     <div id="data">
         <div class="chart-container">
-            <canvas id="departmentRadarChart"></canvas>
+            <canvas id="RadarChart"></canvas>
         </div>
         <div class="table-container">
             <table>
@@ -149,52 +152,50 @@
         </div>
     </div>
     <script>
-        var departments = [];
-        var counts = [];
+        var subjects = [];
+        var marks = [];
+
 
         $.ajax({
-            // url: `https://business-health.cyclic.app/detail/data/<%= id %>`,
-            url: `http://localhost:7485/detail/data/<%= id %>`,
+            // url: `http://localhost:7485/detail/data/<%= id %>`,
+            url: `https://student-health.cyclic.app/detail/data/<%= id %>`,
             method: 'GET',
             success: function (data) {
                 if (Array.isArray(data)) {
-                    const departments = data.map(item => item.department);
-                    const counts = data.map(item => item.count);
-
+                     subjects = data.map(item => item.Subject); // Use 'Subject' property
+                     marks = data.map(item => item.Marks);     // Use 'Marks' property
+                    console.log(subjects);
+                    console.log(marks);
                     // Create the chart
-                    const ctx = document.getElementById('departmentRadarChart').getContext('2d');
+                    const ctx = document.getElementById('RadarChart').getContext('2d');
                     new Chart(ctx, {
                         type: 'radar',
                         data: {
-                            labels: departments,
+                            labels: subjects,
                             datasets: [{
-                                label: 'Department Counts',
-                                data: counts,
-                                backgroundColor: 'rgba(217, 83, 79, 0.2)', /* Red chart background */
-                                borderColor: 'rgba(217, 83, 79, 1)', /* Red chart border */
+                                label: 'Subject Marks',
+                                data: marks,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
                                 borderWidth: 1,
                             }]
                         },
                         options: {
-                                // maintainAspectRatio: true, // Set to false to control aspect ratio independently
-                                // aspectRatio: 10, // Set the aspect ratio (width / height)
-
                             scales: {
-                                r: {
+                                y: {
                                     beginAtZero: true,
-                                    max: 10,    // Set the maximum value on the radar axis
-                                    stepSize: 1,    // Set the step size for the radar axis
+                                    max: 10,     // Set the maximum value on the y-axis based on your data
+                                    stepSize: 1, // Set the step size for the y-axis based on your data
                                 }
                             }
                         }
                     });
-
-                    // Populate the table
+                    
                     const tableBody = document.getElementById('tableBody');
                     tableBody.innerHTML = ''; // Clear previous content
-                    for (let i = 0; i < departments.length; i++) {
+                    for (let i = 0; i < subjects.length; i++) {
                         const row = document.createElement('tr');
-                        row.innerHTML = `<td>${departments[i]}</td><td>${counts[i]}</td>`;
+                        row.innerHTML = `<td>${subjects[i]}</td><td>${marks[i]}</td>`;
                         tableBody.appendChild(row);
                     }
                 } else {
@@ -205,6 +206,8 @@
                 console.error(error);
             }
         });
+
+
     </script>
 </body>
 

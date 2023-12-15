@@ -73,11 +73,11 @@
         transition: background-color 0.3s;
     }
 
-    .company-list li:hover {
+    .marks-list li:hover {
         background-color: #e3e3e3;
     }
 
-    #addRatingLink {
+    #addMarkLink {
         display: inline-block;
         margin-left: 10px;
         padding: 5px 10px;
@@ -88,7 +88,7 @@
         transition: background-color 0.3s ease;
     }
 
-    #addRatingLink:hover {
+    #addMarkLink:hover {
         background-color: #ac2925;
     }
 
@@ -125,67 +125,50 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
-<script>
-    function parseDate(timestamp) {
-        const date = new Date(timestamp);
-        return isNaN(date) ? "Invalid Date" : date.toLocaleString();
-    }
-</script>
-
 <body>
-    
-    
-        <!-- <% if(isAdmin){ %>
-        <h1>Company List</h1>
-        <% }else{ %>
-        <h1><%= CompanyName %></h1>
-        <% } %>
-        <a href="/profile" id="profileLink"><i class="fas fa-user"></i></a> -->
     
         <h1></h1>
         <a href="/profile" id="profileLink"><i class="fas fa-user"></i></a>
         <% if(isAdmin){ %>
-            <h1>Company List</h1>
+            <h1>Student List</h1>
         <% } else { %>
-            <h1><%= CompanyName %></h1>
+            <h1><%= Name %></h1>
         <% } %>
     
-    
-
     
     <div id="searchContainer">
         <% if(isAdmin){ %>
         <div>
-            <form action="./companyList" method="get">
-                <h2>Search for a Company</h2>
-                <input type="text" id="str" name="str" placeholder="Enter company name">
+            <form action="./marksList" method="get">
+                <h2>Search for a Student</h2>
+                <input type="text" id="str" name="str" placeholder="Enter student name">
                 <button id="searchButton">Search</button>
             </form>
         </div>
-        <a href="/indicator/indicators" id="addRatingLink">Add New Indicator</a>
+        <a href="/Subjects" id="addMarkLink">Add New Subject</a>
         <%}else{ %>
-        <a href="addRating" id="addRatingLink">Add New Rating</a>
+        <a href="addMarks" id="addMarkLink">Add New Marks</a>
         <% } %>
     </div>
 
     <div>
         <h2>Records</h2>
-        <ul id="companyList" class="company-list">
+        <ul id="marksList" class="marks-list">
             <% var oldScore = 0; %>
-            <% companies.forEach(function (company) { %>
-            <li onclick="window.location.href='/detail/<%= company.id %>'">
-                <span><%= company.CompanyName %></span>
-                <span><%= company.formattedTimestamp %>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <% if (oldScore < company.overallScore) { %>
-                    <span style="color: green;">&nbsp;<%= company.overallScore %>&nbsp;&nbsp;<i
+            <% marks.forEach(function (mark) { %>
+            <li onclick="window.location.href='/detail/<%= mark.id %>'">
+                <span><%= mark.Name %></span>
+                <span><%= mark.formattedTimestamp %>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <% if (oldScore < mark.overallScore) { %>
+                    <span style="color: green;">&nbsp;<%= mark.overallScore %>&nbsp;&nbsp;<i
                             class="fas fa-arrow-up"></i></span>
-                    <% } else if (oldScore > company.overallScore) { %>
-                    <span style="color: red;">&nbsp;<%= company.overallScore %>&nbsp;&nbsp;<i
+                    <% } else if (oldScore > mark.overallScore) { %>
+                    <span style="color: red;">&nbsp;<%= mark.overallScore %>&nbsp;&nbsp;<i
                             class="fas fa-arrow-down"></i></span>
                     <% } else { %>
-                    <%= company.overallScore %>
+                    <%= mark.overallScore %>
                     <% } %>
-                    <% oldScore = company.overallScore; %>
+                    <% oldScore = mark.overallScore; %>
             </li>
             <% }); %>
         </ul>

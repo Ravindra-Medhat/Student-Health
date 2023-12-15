@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const Rating = require("../models/marks")
+const Marks = require("../models/marks")
 
 app.get('/:id', (req, res) => {
     Rating.findById(req.params.id).then((data) => {

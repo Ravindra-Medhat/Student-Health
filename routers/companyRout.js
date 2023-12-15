@@ -5,7 +5,7 @@ const moment = require('moment-timezone');
 const nodemailer = require('nodemailer');
 
 const Indicator = require('../models/subject');  
-const Rating = require('../models/ratings');
+const Rating = require('../models/marks');
 
 app.get("/companyList", async (req, res) => {
 

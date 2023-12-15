@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express();
 
-const Indicator = require('../models/indicators');
+const Indicator = require('../models/subject');
 
 app.get('/indicators', async (req, res) => {
     try {

@@ -4,7 +4,7 @@ const app = express();
 const moment = require('moment-timezone');
 const nodemailer = require('nodemailer');
 
-const Indicator = require('../models/indicators');  
+const Indicator = require('../models/subject');  
 const Rating = require('../models/ratings');
 
 app.get("/companyList", async (req, res) => {

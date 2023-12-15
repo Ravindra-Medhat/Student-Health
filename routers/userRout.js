@@ -6,7 +6,7 @@ const moment = require('moment');
 
 const randomstring = require('randomstring');
 const user = require("../models/Users");
-const verify = require("../models/verify");
+const verifyOtp = require("../models/verify");
 
 app.get('/register', (req, res) => {
     res.render('verifyEmail',{Email : "",errorMessage:""});
@@ -38,7 +38,7 @@ app.post('/register', async (req, res) => {
                 
                 }else{
 
-                    verify.findOne({Email : req.body.email})
+                    verifyOtp.findOne({Email : req.body.email,otp : req.body.req.body.otp})
                     .then((data)=>{
 
                         if(data){
@@ -49,30 +49,29 @@ app.post('/register', async (req, res) => {
                             const currentTime = moment();
                             const differenceInMinutes = currentTime.diff(otpCreationTime, 'minutes');
                             
-                            if (differenceInMinutes <= 1) {
+                            if (differenceInMinutes <= 2) {
                                 if(data.otp == req.body.otp){
-                                    verify.findOneAndDelete(data).then((data)=>{
+                                    verifyOtp.findOneAndDelete(data).then((data)=>{
                                         res.render("register",{Email : data.Email});
                                     });
                                 }else{
                                     res.render("verifyEmail",{Email : req.body.email , errorMessage:"Invalid email or OTP"});
                                 }
                             }else{
-                                verify.findOneAndDelete(data).then((data)=>{
+                                verifyOtp.findOneAndDelete(data).then((data)=>{
                                     console.log(data);
                                     res.render("verifyEmail",{Email : req.body.email , errorMessage:"Your OTP is expired"});
                                 });
                             }
         
                         }else{
-                            res.render("verifyEmail",{Email : req.body.email , errorMessage:"Invalid email or otp"});
-                        }
 
+                            res.render("verifyEmail",{Email : req.body.email , errorMessage:"Invalid email or otp"});
+                        
+                        }
                     });
                 }
             })
-
-            
         }
 
     } catch (error) {
@@ -100,7 +99,6 @@ app.post("/login", (req, res) => {
                 res.cookie("BHC",t);
                 res.redirect("/Company/companyList");
 
-            
             }
 
         })
@@ -115,31 +113,30 @@ app.get("/logout", (req, res) => {
     res.redirect("/user/login")
 });
 
-app.get("/sendOTP",(req,res)=>{
+app.get("/sendOTPForregister",(req,res)=>{
 
     var Email = req.query.email;
 
     const otp = randomstring.generate({
         length: 6,
         charset: 'numeric',
-      });
+    });
 
-    verify.findOneAndDelete({Email:Email})
-    .then(()=>{
-        const v = new verify({Email:Email,otp:otp});
-    
-        v.save().then((data)=>{
-            console.log(data);
-            sendEmail(data.Email,data.otp);
-        })
-    })
-    
-    res.send("otp sent");
+    const v = new verifyOtp({Email:Email,otp:otp});
+
+    v.save().then(async (data)=>{
+        console.log(data);
+        await sendEmail(data.Email,'Verify Your Email',
+                        'OTP For Verify Your Email : - '+data.otp+' \n\nThis otp expired in 2 minutes');
+        res.send("otp sent");
+    });  
+
 });
 
 
-async function sendEmail(email,otp) {
+async function sendEmail(email,sub,msg) {
     try {
+        console.log("email 1",email);
         // Create a Nodemailer transporter
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -148,21 +145,23 @@ async function sendEmail(email,otp) {
                 pass: 'xctj naln sjnj gjsv',  // replace with your Gmail password
             },
         });
-        
+        console.log("email 2",email);
         // Email content
         const mailOptions = {
             from: 'mazzking666@gmail.com',  // replace with your Gmail email address
             to: email,  // replace with the recipient's email address
-            subject: 'Verify Your Email',
-            text: `OTP For Verify Your Email : - ${otp} \n\nThis otp expired in 2 minutes`,
+            subject: sub,
+            text: msg,
         };
+
         // Send email
+        console.log("email 3",email);
         await transporter.sendMail(mailOptions); 
+        console.log("email 4",email);
         console.log('Email sent successfully');
     } catch (error) {
         console.error('Error sending email:', error);
     }
 }
-
 
 module.exports = app;

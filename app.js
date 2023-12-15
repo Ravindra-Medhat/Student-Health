@@ -8,7 +8,7 @@ const port = process.env.PORT || 7485;
 
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://test:74857485@cluster0.3snq0fm.mongodb.net/BussinessHelthDatabase');
+mongoose.connect('mongodb+srv://test:74857485@cluster0.3snq0fm.mongodb.net/StudentHelthDatabase');
 
 const db = mongoose.connection;
 
@@ -32,6 +32,6 @@ app.use((req, res, next) => {
 app.use(allRout);
 
 app.listen(port, () => {
-    console.log(`Server is running on https://business-health.cyclic.app/`);
+    console.log(`Server is running on https://student-health.cyclic.app/`);
     console.log(`Server is running on http://localhost:7485`);
 });

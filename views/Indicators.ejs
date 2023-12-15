@@ -169,13 +169,9 @@
     </form>
 
     <!-- Display existing indicators sorted by area -->
-<% let currentArea = ''; %>
 <% indicators.forEach(function (indicator) { %>
     <% if (indicator.area !== currentArea) { %>
         <!-- Start new area card -->
-        <% if ('' !== currentArea) { %>
-            </div>
-        <% } %>
         
         <% currentArea = indicator.area; %>
     

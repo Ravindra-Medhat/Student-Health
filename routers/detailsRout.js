@@ -6,7 +6,7 @@ const Marks = require("../models/marks")
 app.get('/:id', (req, res) => {
     Rating.findById(req.params.id).then((data) => {
 
-        res.render('details', { id : req.params.id ,Company : data.CompanyName });
+        res.render('details', { id : req.params.id ,Company : data.Name });
     }).catch((error) => {
         console.log(error);
         res.send(data_for_graph);

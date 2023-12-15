@@ -39,19 +39,19 @@ app.post('/', async (req, res) => {
 });
 
 // Handle form submission for deleting an indicator
-app.post('/deleteIndicator/:id', async (req, res) => {
-    console.log("hii");
+app.post('/deleteSubject/:id', async (req, res) => {
+
     try {
-        const indicatorId = req.params.id;
+        const SubjectId = req.params.id;
 
         // Find and delete the indicator by ID
-        const deletedIndicator = await Subject.findByIdAndDelete(indicatorId);
+        const deletedSubject = await Subject.findByIdAndDelete(SubjectId);
 
-        if (!deletedIndicator) {
+        if (!deletedSubject) {
             return res.status(404).send('Subject not found');
         }
-
-        res.redirect('/indicator/indicators');
+        res.redirect('/Subjects');
+        
     } catch (error) {
         console.error('Error deleting indicator:', error);
         res.status(500).send('Internal Server Error');

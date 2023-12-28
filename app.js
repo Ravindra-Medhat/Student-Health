@@ -29,6 +29,17 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use(express.static('public'));
+
+app.get("/wann_go",(req,res)=>{
+res.render("wann_go")
+});
+
+
+app.get("/celebration",(req,res)=>{
+res.render("celebration")
+});
+
 app.use(allRout);
 
 app.listen(port, () => {

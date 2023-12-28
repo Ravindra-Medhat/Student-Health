@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ask Me Out</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #87CEEB, #000080); /* Light blue to dark blue gradient */
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    img {
+      max-width: 100%;
+      margin-top: 20px;
+    }
+
+    .options {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px;
+      margin: 0 10px;
+      background: linear-gradient(to bottom, #87CEEB, #000080); /* Light blue to dark blue gradient */
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Do you wanna go out with me?</h1>
+    
+    <img src="https://media.tenor.com/aDPKmOQHpVgAAAAi/milk.gif" alt="Excited GIF" width="25%">
+    
+    <div class="options">
+        <button id="yes-btn" onclick="goToNextScreen('yes')">Yes</button>
+        <button id="no-btn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
+    </div>
+  </div>
+
+  <script>
+    function goToNextScreen(choice) {
+      if (choice === 'yes') {
+        window.location.href = '/celebration';
+      }
+    }
+
+    function moveNoButton() {
+      var noButton = document.getElementById('no-btn');
+
+      var randomX = Math.floor(Math.random() * window.innerWidth);
+      var randomY = Math.floor(Math.random() * window.innerHeight);
+
+      noButton.style.position = 'absolute';
+      noButton.style.left = randomX + 'px';
+      noButton.style.top = randomY + 'px';
+    }
+  </script>
+</body>
+</html>

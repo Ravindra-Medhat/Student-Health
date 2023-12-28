@@ -49,4 +49,5 @@ app.use((req,res)=>{
     console.log(req.url);
     res.redirect("/marks/marksList");
 })
+
 module.exports=app;

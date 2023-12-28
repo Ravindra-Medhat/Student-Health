@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ask Me Out</title>
+        <style>
+            body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #87CEEB, #000080); /* Light blue to dark blue gradient */
+    }
+    
+    .container {
+        display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    
+    img {
+        max-width: 100%;
+        margin-top: 20px;
+    }
+    
+    .options {
+        margin-top: 20px;
+    }
+    
+    button {
+        padding: 10px;
+        margin: 0 10px;
+        background: linear-gradient(to bottom, #87CEEB, #000080); /* Light blue to dark blue gradient */
+        font-size: 16px;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Yeeyy ! Finally </h1>
+        
+        <!-- <img src="https://media.tenor.com/aDPKmOQHpVgAAAAi/milk.gif" alt="Excited GIF" width="25%"> -->
+        <img src="https://media.tenor.com/906nGAL7Xw0AAAAi/mochi-peachcat-cute-cat.gif" alt="Excited GIF"  width="25%" >
+        <br><br>
+            <button id="yes-btn" onclick="goToNextScreen('yes')">Let's Fix a Date</button>
+  </div>
+
+  <script>
+    function goToNextScreen(choice) {
+      if (choice === 'yes') {
+        var number = '9824343808'; 
+        var message = "Hello, let's celebrate!";
+        var whatsappUrl = 'https://api.whatsapp.com/send?phone=' + encodeURIComponent(number) + '&text=' + encodeURIComponent(message);
+      }
+    }
+
+   
+  </script>
+</body>
+</html>
